@@ -44,7 +44,7 @@ class SingleSwitchTopo(Topo):
 if __name__ == '__main__':
     setLogLevel('info')
     topo = SingleSwitchTopo()
-    c1 = RemoteController('c1', ip='172.17.0.4')
+    c1 = RemoteController('c1', ip='172.17.0.2')
     net = Mininet(topo=topo, controller=c1, link=TCLink)
     net.start()
     #sleep(5)
@@ -68,6 +68,7 @@ if __name__ == '__main__':
     #os.system('ovs-vsctl add-port s2 gre0 -- set interface gre0 type=gre options:remote_ip=172.17.0.4')
     os.system('ovs-vsctl add-port s3 gre0 -- set interface gre0 type=gre options:remote_ip=172.17.0.2')
     os.system('ovs-vsctl add-port s4 gre1 -- set interface gre1 type=gre options:remote_ip=172.17.0.3')
+    sleep(5)
     os.system('python3 post.py')
     #hosts[0].cmdPrint('ifconfig h1-eth0 mtu 1400 up')
     #sleep(5)

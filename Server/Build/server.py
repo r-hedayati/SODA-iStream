@@ -39,16 +39,20 @@ class SingleSwitchTopo(Topo):
 if __name__ == '__main__':
     setLogLevel('info')
     topo = SingleSwitchTopo()
-    c1 = RemoteController('c1', ip='172.17.0.4')
+    c1 = RemoteController('c1', ip='172.17.0.2')
     net = Mininet(topo=topo, controller=c1, link=TCLink)
     net.start()
-    sleep(5)
+    #sleep(5)
     #net.pingAll()
 
     #sleep(10)
 
     hosts=net.hosts
     print(hosts)
+
+    os.system('ovs-vsctl add-port s2 gres -- set interface gres type=gre options:remote_ip=172.17.0.4')
+    #hosts[0].cmdPrint('ifconfig h1-eth0 mtu 1400 up')
+    #sleep(5)
 
     hostNumber=5
     for host in hosts:
@@ -60,11 +64,8 @@ if __name__ == '__main__':
 
     #print("sleep....")
     #sleep(30)
-    os.system('ovs-vsctl add-port s2 gres -- set interface gres type=gre options:remote_ip=172.17.0.4')
-    #hosts[0].cmdPrint('ifconfig h1-eth0 mtu 1400 up')
-    #sleep(5)
     #hosts[0].cmdPrint('python3 -m dash_emulator.main http://10.0.0.3/live.mpd --output /root/result -y')
     hosts[0].cmdPrint('nginx')
-    hosts[0].cmdPrint('nginx')
+    hosts[1].cmdPrint('nginx')
     CLI(net)
     net.stop()
